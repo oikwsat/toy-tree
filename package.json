@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "ディレクトリ内をツリー表示するコマンド。WEB+DB PRESS Vol.117",
   "main": "index.js",
+  "bin": {
+    "toy-tree": "src/bin.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/oikwsat/toy-tree/issues"
   },
-  "homepage": "https://github.com/oikwsat/toy-tree#readme"
+  "homepage": "https://github.com/oikwsat/toy-tree#readme",
+  "dependencies": {
+    "meow": "^7.0.1"
+  }
 }
