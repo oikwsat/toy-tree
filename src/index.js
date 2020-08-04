@@ -1,6 +1,8 @@
 const meow = require('meow');
+const { read } = require('./read');
+const { format } = require('./format');
 
-exports.main = (argv, stdout, srderr) => {
+exports.main = (argv, stdout, stderr) => {
     const cli = meow(
         `
         Usage
@@ -18,7 +20,18 @@ exports.main = (argv, stdout, srderr) => {
 
     const dir = cli.input[0] || '.';
 
-    stdout(dir);
+    let root;
+
+    try {
+        root = read(dir);
+    } catch (e) {
+        stderr(`Error: ${e.message}`);
+        return 1;
+    }
+
+    const output = format(root);
+
+    stdout(output);
 
     return 0;
 };

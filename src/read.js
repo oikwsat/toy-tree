@@ -32,7 +32,7 @@ const readDirectory = (dir) => {
     return nodes;
 };
 
-exports read = (dir) => {
+exports.read = (dir) => {
     let stat;
 
     try {
@@ -52,4 +52,4 @@ exports read = (dir) => {
     };
 
     return root;
-}
+};
