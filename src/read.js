@@ -1,7 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const readDirectory = (dir) => {
+const readDirectory = (dir, depth, options) => {
+    // -Lオプションの値と現在の改装を比較して，読み取り不要になったタイミングで再起を中止する
+    if (options.level < depth) {
+        return [];
+    }
+
     const dirents = fs.readdirSync(dir, {
         withFileTypes: true,
     });
@@ -24,6 +29,8 @@ const readDirectory = (dir) => {
                 name: dirent.name,
                 children: readDirectory(
                     path.join(dir, dirent.name),
+                    depth + 1,
+                    options,
                 ),
             });
         }
@@ -32,7 +39,7 @@ const readDirectory = (dir) => {
     return nodes;
 };
 
-exports.read = (dir) => {
+exports.read = (dir, options) => {
     let stat;
 
     try {
@@ -45,10 +52,12 @@ exports.read = (dir) => {
         throw new Error(`#${dir}" can't be opend asa a directory.`);
     }
 
+
+    // readDirectory関数に初期階層とoptionsを渡す
     const root = {
         type: 'directory',
         name: dir,
-        children: readDirectory(dir),
+        children: readDirectory(dir, 1, options),
     };
 
     return root;
