@@ -1,24 +1,24 @@
 // 全ノードの共通型
-interface BaseNode <T> {
-    type: T;
-    name: string;
+interface BaseNode<T> {
+  type: T;
+  name: string;
 }
 
 // ファイルはtypeとnameのみをもつ
-export interface FileNode extends BaseNode<'file'> {}
+export interface FileNode extends BaseNode<"file"> {}
 
 // ディレクトリは追加でノードの配列を持つ
-export interface DirectoryNode extends BaseNode<'directory'> {
-    children: TreeNode[];
+export interface DirectoryNode extends BaseNode<"directory"> {
+  children: TreeNode[];
 }
 
-export interface SymlinkNode extends BaseNode<'symlink'> {
-    link: string;
+export interface SymlinkNode extends BaseNode<"symlink"> {
+  link: string;
 }
 
 // toy-tree で扱う全ノードのいずれかを表すunion型
 export type TreeNode = FileNode | DirectoryNode | SymlinkNode;
 
 export interface Options {
-    level: number;
+  level: number;
 }

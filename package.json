@@ -35,7 +35,7 @@
     "build": "tsc",
     "test": "jest",
     "lint": "eslint \"**/*.ts\"",
-    "format": "prettier --write \"**/*.{js,ts,json,md}\""
+    "format": "prettier --write \"**/*.{js,ts,md}\""
   },
   "repository": {
     "type": "git",

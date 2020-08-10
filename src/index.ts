@@ -1,55 +1,58 @@
-import meow from 'meow';
-import { read } from './read';
-import { format } from './format';
-import { DirectoryNode, Options } from './types';
+import meow from "meow";
+import { read } from "./read";
+import { format } from "./format";
+import { DirectoryNode, Options } from "./types";
 
 type Writer = (...args: any[]) => void;
 
-export const main = (argv: string[], stdout: Writer, stderr: Writer): number => {
-    const cli = meow(
-        `
+export const main = (
+  argv: string[],
+  stdout: Writer,
+  stderr: Writer
+): number => {
+  const cli = meow(
+    `
         Usage
             $ toy-tree <directory>
 
         Example
             $ toy-tree
             $ toy-tree path/to/dir
-        `
-        ,
-        {
-            flags: {
-                level: {
-                    type: 'number',
-                    alias: 'L',
-                    default: Infinity,
-                }
-            },
-            argv,
+        `,
+    {
+      flags: {
+        level: {
+          type: "number",
+          alias: "L",
+          default: Infinity,
         },
-    );
-
-    const dir = cli.input[0] || '.';
-    const options: Options = {
-        level: cli.flags.level,
-    };
-
-    if (options.level < 1) {
-        stderr('Error: Invalid level, must be greater than 0.');
-        return 1;
+      },
+      argv,
     }
+  );
 
-    let root: DirectoryNode;
+  const dir = cli.input[0] || ".";
+  const options: Options = {
+    level: cli.flags.level,
+  };
 
-    try {
-        root = read(dir, options);
-    } catch (e) {
-        stderr(`Error: ${e.message}`);
-        return 1;
-    }
+  if (options.level < 1) {
+    stderr("Error: Invalid level, must be greater than 0.");
+    return 1;
+  }
 
-    const output = format(root);
+  let root: DirectoryNode;
 
-    stdout(output);
+  try {
+    root = read(dir, options);
+  } catch (e) {
+    stderr(`Error: ${e.message}`);
+    return 1;
+  }
 
-    return 0;
+  const output = format(root);
+
+  stdout(output);
+
+  return 0;
 };
