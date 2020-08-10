@@ -46,7 +46,7 @@ const readDirectory = (dir: string, depth: number, options: Options) => {
     return nodes;
 };
 
-export const read = (dir: string, options: Options) => {
+export const read = (dir: string, options: Options): DirectoryNode => {
     let stat: fs.Stats;
 
     try {
