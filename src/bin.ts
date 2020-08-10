@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { main } from './';
+import { main } from './index';
 
 const code = main(
     process.argv.slice(2),

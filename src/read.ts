@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { TODO_any } from './types';
+import { TreeNode, Options, DirectoryNode } from './types';
 
-const readDirectory = (dir, depth, options) => {
+const readDirectory = (dir: string, depth: number, options: Options) => {
     // -Lオプションの値と現在の改装を比較して，読み取り不要になったタイミングで再起を中止する
     if (options.level < depth) {
         return [];
@@ -12,7 +12,7 @@ const readDirectory = (dir, depth, options) => {
         withFileTypes: true,
     });
 
-    const nodes: TODO_any[] = [];
+    const nodes: TreeNode[] = [];
 
     dirents.forEach((dirent) => {
         if (dirent.name.startsWith('.')) {
@@ -40,8 +40,8 @@ const readDirectory = (dir, depth, options) => {
     return nodes;
 };
 
-export const read = (dir, options) => {
-    let stat;
+export const read = (dir: string, options: Options) => {
+    let stat: fs.Stats;
 
     try {
         stat = fs.statSync(dir);
@@ -55,7 +55,7 @@ export const read = (dir, options) => {
 
 
     // readDirectory関数に初期階層とoptionsを渡す
-    const root = {
+    const root: DirectoryNode = {
         type: 'directory',
         name: dir,
         children: readDirectory(dir, 1, options),
